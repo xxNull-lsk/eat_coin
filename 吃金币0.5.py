@@ -9,15 +9,15 @@ import pgzrun
 def update():
     pass
 
-# 绘制背景、角色和物品
 def draw():
+    '''绘制背景、角色和物品'''
     screen.clear()
     screen.blit('bg', pos=[0, 0])
     g_actor.draw()
     g_stuff.draw()
 
-# 控制角色移动
 def on_key_down(key):
+    '''控制角色移动'''
     if key == keys.RIGHT:
         g_actor.x += 10
     elif key == keys.LEFT:

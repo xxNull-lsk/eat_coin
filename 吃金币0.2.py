@@ -8,8 +8,8 @@ import pgzrun
 def update():
     pass
 
-# 绘制背景、主角
 def draw():
+    '''绘制背景、主角'''
     screen.clear()
     screen.blit('bg', pos=[0, 0])
     g_actor.draw()

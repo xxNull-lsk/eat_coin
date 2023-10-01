@@ -13,8 +13,8 @@ STATUS_FINISH = 3
 def update():
     pass
 
-# 绘制背景、角色和物品
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score, g_staus, g_remain_time
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -28,8 +28,8 @@ def draw():
     elif g_staus == STATUS_FINISH:
         screen.draw.text(f"游戏结束，得分: {g_score}", (500, 50), fontname='default')
 
-# 控制角色移动
 def on_key_down(key):
+    '''控制角色移动'''
     global g_score, g_staus
     if g_staus == STATUS_PAUSE:
         if key == keys.SPACE:
@@ -56,8 +56,8 @@ def on_key_down(key):
         g_stuff.x = random.randint(g_stuff.width, WIDTH - g_stuff.width)
         g_stuff.y = random.randint(g_stuff.height, HEIGHT - g_stuff.height)
 
-# 检查游戏剩余时间
 def check_finish():
+    '''检查游戏剩余时间'''
     global g_staus, g_remain_time
     if g_staus != STATUS_RUNNING:
         return

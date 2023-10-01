@@ -9,8 +9,8 @@ import pgzrun
 def update():
     pass
 
-# 绘制背景、角色和物品
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -18,8 +18,8 @@ def draw():
     g_stuff.draw()
     screen.draw.text(f"现有分数: {g_score}", (10, 10), fontname='default')
 
-# 控制角色移动
 def on_key_down(key):
+    '''控制角色移动'''
     global g_score, g_remain_time
     if g_remain_time <= 0:
         return

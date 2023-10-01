@@ -9,8 +9,8 @@ import pgzrun
 def update():
     pass
 
-# 绘制背景、角色和物品
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score, g_remain_time
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -22,8 +22,8 @@ def draw():
         screen.draw.text(f"剩余时间: {g_remain_time} 秒", (10, 10), fontname='default')
         screen.draw.text(f"现有分数: {g_score}", (10, 50), fontname='default')
 
-# 控制角色移动
 def on_key_down(key):
+    '''控制角色移动'''
     global g_score, g_remain_time
     if g_remain_time <= 0:
         return
@@ -44,8 +44,8 @@ def on_key_down(key):
         g_stuff.x = random.randint(g_stuff.width, WIDTH - g_stuff.width)
         g_stuff.y = random.randint(g_stuff.height, HEIGHT - g_stuff.height)
 
-# 检查游戏剩余时间
 def check_finish():
+    '''检查游戏剩余时间'''
     global g_remain_time
     if g_remain_time > 0:
         g_remain_time -= 1

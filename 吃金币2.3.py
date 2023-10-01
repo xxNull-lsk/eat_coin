@@ -10,8 +10,8 @@ STATUS_RUNNING = 1
 STATUS_PAUSE = 2
 STATUS_FINISH = 3
 
-# 控制主角移动
 def update():
+    '''控制主角移动'''
     global g_staus, g_score
     if g_staus != STATUS_RUNNING:
         return
@@ -27,8 +27,8 @@ def update():
     g_actor.x = max(min(g_actor.x, WIDTH - g_actor.width), g_actor.width)
     g_actor.y = max(min(g_actor.y, HEIGHT - g_actor.height), g_actor.height)
 
-# 绘制背景、角色和物品
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score, g_staus, g_remain_time
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -43,8 +43,8 @@ def draw():
         screen.draw.text(f"游戏结束，得分: {g_score}", (500, 50), fontname='noto')
 
 
-# 控制游戏状态
 def on_key_down(key):
+    '''控制游戏状态'''
     global g_staus
     if key == keys.SPACE:
         if g_staus == STATUS_PAUSE:
@@ -52,24 +52,24 @@ def on_key_down(key):
         elif g_staus == STATUS_RUNNING:
             g_staus = STATUS_PAUSE
 
-# 计算游戏时间
 def check_finish():
+    '''计算游戏时间'''
     global g_remain_time, g_staus
     if g_remain_time > 0:
         g_remain_time -= 1
     else:
         g_staus = STATUS_FINISH
 
-# 创建物品
 def create_stuff():
+    '''创建物品'''
     global g_stuff
     g_stuff = Actor('coin')
     g_stuff.x = random.randint(g_stuff.width, WIDTH - g_stuff.width)
     g_stuff.y = 0
 
 
-# 计算物品
 def check_stuff():
+    '''计算物品'''
     global g_score, g_stuff
     if g_remain_time < 0:
         return
