@@ -155,11 +155,6 @@ def check_stuff():
         create_stuff()
 
 
-# 设置窗口大小
-WIDTH = 1024
-HEIGHT = 512
-
-
 def start():
     global g_score, g_remain_time, g_staus, g_stuffs
     # 游戏分数
@@ -176,6 +171,10 @@ def start():
     pygame.mixer.Channel(0).set_volume(0.5)
     pygame.mixer.Channel(0).play(pygame.mixer.Sound('music/bgm.mp3'))
 
+
+# 设置窗口大小
+WIDTH = 1024
+HEIGHT = 512
 
 # 加载主角
 g_actor = Actor("alien")
