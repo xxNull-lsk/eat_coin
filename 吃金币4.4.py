@@ -11,8 +11,9 @@ STATUS_RUNNING = 1
 STATUS_PAUSE = 2
 STATUS_FINISH = 3
 
-# 控制主角移动
+
 def update():
+    '''控制主角移动'''
     global g_staus, g_score
     if g_staus != STATUS_RUNNING:
         return
@@ -28,8 +29,9 @@ def update():
     g_actor.x = max(min(g_actor.x, WIDTH - g_actor.width), g_actor.width)
     g_actor.y = max(min(g_actor.y, HEIGHT - g_actor.height), g_actor.height)
 
-# 绘制背景、角色和物品
+
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score, g_staus, g_remain_time
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -37,7 +39,8 @@ def draw():
         g_actor.draw()
         for stuff in g_stuffs:
             stuff.draw()
-        screen.draw.text(f"剩余时间: {g_remain_time} 秒", (10, 10), fontname='default')
+        screen.draw.text(f"剩余时间: {g_remain_time} 秒",
+                         (10, 10), fontname='default')
         screen.draw.text(f"现有分数: {g_score}", (10, 50), fontname='default')
     elif g_staus == STATUS_PAUSE:
         screen.draw.text(f"游戏已暂停", (500, 50), fontname='default')
@@ -45,8 +48,8 @@ def draw():
         screen.draw.text(f"游戏结束，得分: {g_score}", (500, 50), fontname='default')
 
 
-# 控制游戏状态
 def on_key_down(key):
+    '''控制游戏状态'''
     global g_staus
     if key == keys.SPACE:
         if g_staus == STATUS_PAUSE:
@@ -55,8 +58,9 @@ def on_key_down(key):
             g_staus = STATUS_PAUSE
         check_music()
 
-# 计算游戏时间
+
 def check_finish():
+    '''计算游戏时间'''
     global g_remain_time, g_staus
     if g_remain_time > 0:
         g_remain_time -= 1
@@ -64,15 +68,17 @@ def check_finish():
         g_staus = STATUS_FINISH
         check_music()
 
-# 防止道具重叠
+
 def is_valid_pos(s):
+    '''防止道具重叠'''
     for stuff in g_stuffs:
         if s.colliderect(stuff):
             return False
     return True
 
-# 创建物品
+
 def create_stuff():
+    '''创建物品'''
     global g_stuffs
     count = 8 - len(g_stuffs)
     for i in range(count):
@@ -89,8 +95,9 @@ def create_stuff():
             stuff.x = random.randint(stuff.width, WIDTH - stuff.width)
         g_stuffs.append(stuff)
 
-# 控制音乐播放
+
 def check_music():
+    '''控制音乐播放'''
     if g_staus == STATUS_RUNNING:
         pygame.mixer.unpause()
     elif g_staus == STATUS_PAUSE:
@@ -98,8 +105,9 @@ def check_music():
     elif g_staus == STATUS_FINISH:
         pygame.mixer.stop()
 
-# 计算物品
+
 def check_stuff():
+    '''计算物品'''
     global g_score, g_stuffs, g_remain_time, g_staus
     if g_staus != STATUS_RUNNING:
         return
@@ -118,12 +126,15 @@ def check_stuff():
                 g_score += 1
             elif stuff.image == "bomb":
                 g_remain_time -= 2
-                pygame.mixer.Channel(1).play(pygame.mixer.Sound('music/blast.mp3'))
+                pygame.mixer.Channel(1).play(
+                    pygame.mixer.Sound('music/blast.mp3'))
             elif stuff.image == "mushroom":
-                g_remain_time += 3 # 由于蘑菇出现的概率低，所以，加时多一点
-                pygame.mixer.Channel(1).play(pygame.mixer.Sound('music/eat_mushroom.mp3'))
+                g_remain_time += 3  # 由于蘑菇出现的概率低，所以，加时多一点
+                pygame.mixer.Channel(1).play(
+                    pygame.mixer.Sound('music/eat_mushroom.mp3'))
             del g_stuffs[i]
         create_stuff()
+
 
 # 设置窗口大小
 WIDTH = 1024

@@ -1,6 +1,6 @@
 '''
 
-优化声音播放
+优化状态控制
 
 '''
 import random
@@ -11,10 +11,9 @@ STATUS_RUNNING = 1
 STATUS_PAUSE = 2
 STATUS_FINISH = 3
 
-# 控制主角移动
-
 
 def update():
+    '''控制主角移动'''
     global g_staus, g_score
     if g_staus != STATUS_RUNNING:
         return
@@ -30,10 +29,9 @@ def update():
     g_actor.x = max(min(g_actor.x, WIDTH - g_actor.width), g_actor.width)
     g_actor.y = max(min(g_actor.y, HEIGHT - g_actor.height), g_actor.height)
 
-# 绘制背景、角色和物品
-
 
 def draw():
+    '''绘制背景、角色和物品'''
     global g_score, g_staus, g_remain_time
     screen.clear()
     screen.blit('bg', pos=[0, 0])
@@ -42,25 +40,26 @@ def draw():
         g_actor.draw()
         for stuff in g_stuffs:
             stuff.draw()
-        screen.draw.text(f"剩余时间: {g_remain_time} 秒", (10, 10), fontname='default')
+        screen.draw.text(f"剩余时间: {g_remain_time} 秒",
+                         (10, 10), fontname='default')
         screen.draw.text(f"现有分数: {g_score}", (10, 50), fontname='default')
         screen.draw.text(f"    EXC: 退出     SPACE: 暂停",
-                        (0, HEIGHT - 50),
-                        fontname='default', fontsize=16, owidth=1)
+                         (0, HEIGHT - 50),
+                         fontname='default', fontsize=16, owidth=1)
     elif g_staus == STATUS_PAUSE:
         screen.draw.text(f"游戏已暂停", (500, 50), fontname='default')
         screen.draw.text(f"    EXC: 退出     SPACE: 恢复",
-                        (0, HEIGHT - 50),
-                        fontname='default', fontsize=16, owidth=1)
+                         (0, HEIGHT - 50),
+                         fontname='default', fontsize=16, owidth=1)
     elif g_staus == STATUS_FINISH:
         screen.draw.text(f"游戏结束，得分: {g_score}", (500, 50), fontname='default')
         screen.draw.text(f"    EXC: 退出     ENTER: 重新开始",
-                        (0, HEIGHT - 50),
-                        fontname='default', fontsize=16, owidth=1)
+                         (0, HEIGHT - 50),
+                         fontname='default', fontsize=16, owidth=1)
 
 
-# 控制游戏状态
 def on_key_down(key):
+    '''控制游戏状态'''
     global g_staus
     if key == keys.SPACE:
         if g_staus == STATUS_PAUSE:
@@ -79,8 +78,8 @@ def on_key_down(key):
             check_music()
 
 
-# 计算游戏时间
 def check_finish():
+    '''计算游戏时间'''
     global g_remain_time, g_staus
     if g_remain_time > 0:
         g_remain_time -= 1
@@ -88,19 +87,17 @@ def check_finish():
         g_staus = STATUS_FINISH
         check_music()
 
-# 防止道具重叠
-
 
 def is_valid_pos(s):
+    '''防止道具重叠'''
     for stuff in g_stuffs:
         if s.colliderect(stuff):
             return False
     return True
 
-# 创建物品
-
 
 def create_stuff():
+    '''创建物品'''
     global g_stuffs
     count = 8 - len(g_stuffs)
     for i in range(count):
@@ -117,10 +114,9 @@ def create_stuff():
             stuff.x = random.randint(stuff.width, WIDTH - stuff.width)
         g_stuffs.append(stuff)
 
-# 控制音乐播放
-
 
 def check_music():
+    '''控制音乐播放'''
     if g_staus == STATUS_RUNNING:
         pygame.mixer.unpause()
     elif g_staus == STATUS_PAUSE:
@@ -128,10 +124,9 @@ def check_music():
     elif g_staus == STATUS_FINISH:
         pygame.mixer.stop()
 
-# 计算物品
-
 
 def check_stuff():
+    '''计算物品'''
     global g_score, g_stuffs, g_remain_time, g_staus
     if g_staus != STATUS_RUNNING:
         return
